@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import routes from './routes';
@@ -21,7 +22,7 @@ app.use(
 
     return response.status(500).json({
       status: 'error',
-      message: error.message,
+      message: 'Internal server error',
     });
   },
 );
