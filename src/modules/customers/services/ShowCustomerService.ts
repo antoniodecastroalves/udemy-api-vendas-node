@@ -11,7 +11,7 @@ class ShowCustomerService {
   public async execute({ id }: IRequest): Promise<Customer> {
     const customersRepository = getCustomRepository(CustomersRepository);
 
-    const customer = await customersRepository.findOne(id);
+    const customer = await customersRepository.findById(id);
 
     if (!customer) {
       throw new AppError('Customer not found');
