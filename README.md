@@ -1,5 +1,8 @@
 # API  de Vendas com Node.js
-Curso prático de criação de uma API de Vendas com Node.js, Typescript, TypeORM, Docker
+API Restful de Vendas Javascript com Node.js, ExpressJS, Typescript, TypeORM, Postgres, Docker, Redis, etc.
+
+## Usando
+
 
 ## Rodando a aplicação no seu PC
 
