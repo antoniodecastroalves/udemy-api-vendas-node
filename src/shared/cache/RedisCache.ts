@@ -12,7 +12,18 @@ export default class RedisCache {
     await this.cliente.set(key, JSON.stringify(value));
   }
 
-  //public async recover<T>(key: string): Promise<T || null> { }
+  public async recover<T>(key: string): Promise<T | null> {
+    const data = await this.cliente.get(key);
 
-  //public async invalidate(key: string): Promise<void>{}
+    if (!data) {
+      return null;
+    }
+    const parsedData = JSON.parse(data) as T;
+
+    return parsedData;
+  }
+
+  public async invalidate(key: string): Promise<void> {
+    await this.cliente.del(key);
+  }
 }
