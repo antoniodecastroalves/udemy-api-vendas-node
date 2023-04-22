@@ -8,9 +8,11 @@ import UpdateCustomerService from '@modules/customers/services/UpdateCustomerSer
 
 export default class CustomersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const listCustomers = new ListCustomerService();
+    const page = request.query.page ? Number(request.query.page) : 1;
+    const limit = request.query.limit ? Number(request.query.limit) : 15;
 
-    const customers = await listCustomers.execute();
+    const listCustomers = container.resolve(ListCustomerService);
+    const customers = await listCustomers.execute({ page, limit });
 
     return response.json(customers);
   }
@@ -58,7 +60,7 @@ export default class CustomersController {
   public async delete(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
-    const deleteCustomer = new DeleteCustomerService();
+    const deleteCustomer = container.resolve(DeleteCustomerService);
 
     await deleteCustomer.execute({ id });
 
