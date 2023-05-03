@@ -18,15 +18,13 @@ export default class CustomersController {
   }
 
   public async show(request: Request, response: Response): Promise<Response> {
-    {
-      const { id } = request.params;
+    const { id } = request.params;
 
-      const showCustomer = new ShowCustomerService();
+    const showCustomer = container.resolve(ShowCustomerService);
 
-      const customer = await showCustomer.execute({ id });
+    const customer = await showCustomer.execute({ id });
 
-      return response.json(customer);
-    }
+    return response.json(customer);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -46,7 +44,7 @@ export default class CustomersController {
     const { name, email } = request.body;
     const { id } = request.params;
 
-    const updateCustomer = new UpdateCustomerService();
+    const updateCustomer = container.resolve(UpdateCustomerService);
 
     const customer = await updateCustomer.execute({
       id,
