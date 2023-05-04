@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
-import { IDeleteCustomer } from './../domain/models/IDeleteCustomer';
-import { ICustomersRepository } from './../domain/repositories/ICustomersRepository';
+import { IDeleteCustomer } from '../domain/models/IDeleteCustomer';
+import { ICustomersRepository } from '../domain/repositories/ICustomersRepository';
 
 @injectable()
 class DeleteCustomerService {
@@ -14,7 +14,7 @@ class DeleteCustomerService {
     const customer = await this.customersRepository.findById(id);
 
     if (!customer) {
-      throw new AppError('Customer not found');
+      throw new AppError('Customer not found.');
     }
 
     await this.customersRepository.remove(customer);

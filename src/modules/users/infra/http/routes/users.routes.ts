@@ -6,16 +6,17 @@ import isAuthenticated from '@shared/infra/http/middlewares/isAuthenticated';
 import UsersController from '@modules/users/infra/http/controllers/UsersController';
 import UserAvatarController from '@modules/users/infra/http/controllers/UserAvatarController';
 
-const userRouter = Router();
+const usersRouter = Router();
 const usersController = new UsersController();
 const usersAvatarController = new UserAvatarController();
 
-const upload = multer(uploadConfig);
+const upload = multer(uploadConfig.multer);
 
-userRouter.get('/', isAuthenticated, usersController.index);
+usersRouter.get('/', isAuthenticated, usersController.index);
 
-userRouter.get(
+usersRouter.get(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
@@ -24,7 +25,7 @@ userRouter.get(
   usersController.show,
 );
 
-userRouter.post(
+usersRouter.post(
   '/',
   celebrate({
     [Segments.BODY]: {
@@ -36,36 +37,11 @@ userRouter.post(
   usersController.create,
 );
 
-userRouter.put(
-  '/:id',
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    },
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  usersController.update,
-);
-
-userRouter.delete(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  usersController.delete,
-);
-
-userRouter.patch(
+usersRouter.patch(
   '/avatar',
   isAuthenticated,
   upload.single('avatar'),
   usersAvatarController.update,
 );
 
-export default userRouter;
+export default usersRouter;

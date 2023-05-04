@@ -11,7 +11,7 @@ interface SearchParams {
 class ListCustomerService {
   constructor(
     @inject('CustomersRepository')
-    private customerRepository: ICustomersRepository,
+    private customersRepository: ICustomersRepository,
   ) {}
 
   public async execute({
@@ -20,7 +20,7 @@ class ListCustomerService {
   }: SearchParams): Promise<ICustomerPaginate> {
     const take = limit;
     const skip = (Number(page) - 1) * take;
-    const customers = await this.customerRepository.findAll({
+    const customers = await this.customersRepository.findAll({
       page,
       skip,
       take,
