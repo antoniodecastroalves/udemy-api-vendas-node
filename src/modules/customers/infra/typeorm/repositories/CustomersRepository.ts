@@ -1,17 +1,16 @@
-import {
-  ICustomersRepository,
-  SearchParams,
-} from '@modules/customers/domain/repositories/ICustomersRepository';
-import { getRepository, Repository } from 'typeorm';
-import Customer from '@modules/customers/infra/typeorm/entities/Customer';
 import { ICreateCustomer } from '@modules/customers/domain/models/ICreateCustomer';
 import { ICustomerPaginate } from '@modules/customers/domain/models/ICustomerPaginate';
+import { ICustomersRepository } from '@modules/customers/domain/repositories/ICustomersRepository';
+import { Repository } from 'typeorm';
+import Customer from '../entities/Customer';
+import { dataSource } from '@shared/infra/typeorm';
+import { SearchParams } from '../../../domain/repositories/ICustomersRepository';
 
 class CustomersRepository implements ICustomersRepository {
   private ormRepository: Repository<Customer>;
 
   constructor() {
-    this.ormRepository = getRepository(Customer);
+    this.ormRepository = dataSource.getRepository(Customer);
   }
 
   public async create({ name, email }: ICreateCustomer): Promise<Customer> {
@@ -53,31 +52,25 @@ class CustomersRepository implements ICustomersRepository {
     return result;
   }
 
-  public async findByName(name: string): Promise<Customer | undefined> {
-    const customer = await this.ormRepository.findOne({
-      where: {
-        name,
-      },
+  public async findByName(name: string): Promise<Customer | null> {
+    const customer = await this.ormRepository.findOneBy({
+      name,
     });
 
     return customer;
   }
 
-  public async findById(id: string): Promise<Customer | undefined> {
-    const customer = await this.ormRepository.findOne({
-      where: {
-        id,
-      },
+  public async findById(id: string): Promise<Customer | null> {
+    const customer = await this.ormRepository.findOneBy({
+      id,
     });
 
     return customer;
   }
 
-  public async findByEmail(email: string): Promise<Customer | undefined> {
-    const customer = await this.ormRepository.findOne({
-      where: {
-        email,
-      },
+  public async findByEmail(email: string): Promise<Customer | null> {
+    const customer = await this.ormRepository.findOneBy({
+      email,
     });
 
     return customer;
