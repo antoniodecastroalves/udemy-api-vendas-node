@@ -3,7 +3,7 @@ import AppError from '@shared/errors/AppError';
 import { ICreateUser } from '../domain/models/ICreateUser';
 import { IUser } from '../domain/models/IUser';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
-import { IHashProvider } from '../providers/HashProvider/models/IHashPovider';
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 
 @injectable()
 class CreateUserService {
