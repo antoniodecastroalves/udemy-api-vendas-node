@@ -20,7 +20,7 @@ import { AddOrderFieldtoOrders1682559844394 } from './migrations/1682559844394-A
 
 export const dataSource = new DataSource({
   type: 'postgres',
-  host: 'db',
+  host: 'localhost',
   port: 5432,
   username: 'postgres',
   password: 'docker',
